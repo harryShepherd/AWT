@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Welcome to BoxBox</h3>
+
+<div class="league-container">
+{% for league in leagues %}
+
+        <div class="league-item">
+            <a href="/league/?id={{ league.idLeague }}">
+                <img src="{{ league.strLogo }}">
+                <p>{{ league.strLeague }}</p>
+            </a>
+        </div>
+        
+{% endfor %}
+</div>
+
+{% endblock %}

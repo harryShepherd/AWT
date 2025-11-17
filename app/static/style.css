@@ -1,0 +1,50 @@
+nav {
+    background-color: dodgerblue;
+}
+
+nav li {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
+}
+
+footer {
+    background-color: dodgerblue;
+}
+
+.content {
+    width: 75%;
+    margin: auto;
+    background-color: white;
+}
+
+p {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1em;
+}
+
+.league-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: dodgerblue;
+    padding: 10px;
+}
+
+.league-item {
+    background-color: whitesmoke;
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+.league-item img {
+    width: 200px;
+}
+
+.league-item p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
+}
+
+.league-banner {
+    width: 100%;
+}
