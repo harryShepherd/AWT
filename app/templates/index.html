@@ -2,15 +2,30 @@
 
 {% block content %}
 
-<h3>Welcome to BoxBox</h3>
-
-<div class="league-container">
-{% for league in leagues %}
+<h1>Articles</h1>
+<hr>
+<div class="articles-container">
+    {% for league in leagueIds %}
 
         <div class="league-item">
-            <a href="/league/?id={{ league.idLeague }}">
-                <img src="{{ league.strLogo }}">
-                <p>{{ league.strLeague }}</p>
+            <a href="/league?l={{ leagues[league].idLeague }}">
+                <img src="{{ leagues[league].strLogo }}">
+                <p>Article</p>
+            </a>
+        </div>
+        
+    {% endfor %}
+</div>
+
+<h1>Leagues</h1>
+<hr>
+<div class="league-container">
+{% for league in leagueIds %}
+
+        <div class="league-item">
+            <a href="/league?l={{ leagues[league].idLeague }}">
+                <img src="{{ leagues[league].strLogo }}">
+                <p>{{ leagues[league].strLeague }}</p>
             </a>
         </div>
         

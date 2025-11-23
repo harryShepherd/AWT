@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ league.strLeague }} Teams</h1>
+
+<div class="drivers-container>">
+    {% for driver in drivers %}
+    <div class="drivers-item">
+        <img src="{{ driver.strThumb }}">
+        <p>{{ driver.strPlayer }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

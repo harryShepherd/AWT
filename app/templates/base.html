@@ -4,20 +4,23 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 <body>
-    <nav>
-        <h1>BoxBox</h1>
-
-        <ul>
-            <li>Register</li>
-            <li>Log In</li>
+    <header>
+        <h1 id="header-title">BoxBox</h1>
+        <ul id="navigation">
+            {% if logged_in %}
+                <li>Hello, {{ username }}</li>
+                <a href="logout"><li>Log Out</li></lio></a>
+            {% else %}
+                <a href="register"><li>Register</li></a>
+                <a href="login"><li>Log In</li></a>
+            {% endif %}
         </ul>
-    </nav>
+    </header>
 
     <section class="content">
-        <header>
-            {% block header %} {% endblock %}
-        </header>
+        <body>
         {% block content %} {% endblock %}
+        </body>
     </section>
 
     <footer>

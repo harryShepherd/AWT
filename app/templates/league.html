@@ -2,8 +2,28 @@
 
 {% block content %}
 
-<img class="league-banner" src="{{ league.strBanner }}">
-<h1>{{ league.strLeague }}</h1>
-<p> {{ league.strDescriptionEN }} </p>
+<div class="league-information">
+    <img class="league-banner" src="{{ league.strBanner }}">
+    <h1>{{ league.strLeague }}</h1>
+    <p> {{ league.strDescriptionEN }} </p>
+</div>
+
+<div class="league-next-event">
+    {% if nextEvent %}
+    <h1>{{ nextEvent.strEvent }}</h1>
+    <p>{{ nextEvent.strCountry }}</p>
+    <p>{{ nextEvent.strTimestamp }}</p>
+    {% else %}
+    <h1>This season has concluded.</h1>
+    {% endif %}
+</div>
+
+<div class="league-teams">
+    <a href="/league/teams?l={{ league.idLeague }}"><h1>Teams</h1></a>
+</div>
+
+<div class="league-drivers">
+    <a href="/league/drivers?l={{ league.idLeague }}"><h1>Drivers</h1></a>
+</div>
 
 {% endblock %}

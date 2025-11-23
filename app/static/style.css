@@ -1,14 +1,43 @@
-nav {
-    background-color: dodgerblue;
+* {
+    margin: 0;
+    padding: 0;
 }
 
-nav li {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1em;
+header {
+    background-color: dodgerblue;
+    margin: 0;
+    width: 100%;
+    position: sticky;
+    min-height: 60px;
+    display: flex;
+    align-items: right;
+    justify-content: space-between;
 }
+
+header ul {
+    list-style-type: none;
+    text-align: center;
+    display: flex;
+}
+
+header li {
+    font-size: 125%;
+    margin: 5%;
+}
+
+header h1 {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 10px
+}
+
 
 footer {
-    background-color: dodgerblue;
+    background-color: rgb(38, 128, 218);
+    text-align: center;
+}
+
+footer p {
+    padding: 1%;
 }
 
 .content {
@@ -26,13 +55,14 @@ p {
     display: grid;
     grid-template-columns: auto auto auto;
     background-color: dodgerblue;
-    padding: 10px;
+    padding: 1%;
+    margin: 5%;
 }
 
 .league-item {
     background-color: whitesmoke;
     border: 1px solid black;
-    padding: 10px;
+    padding: 10%;
     text-align: center;
 }
 
@@ -47,4 +77,16 @@ p {
 
 .league-banner {
     width: 100%;
+}
+
+.articles-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: dodgerblue;
+    padding: 1%;
+    margin: 5%;
+}
+
+.team-item {
+    background-color: #DDD;
 }

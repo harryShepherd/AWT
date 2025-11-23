@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ league.strLeague }} Teams</h1>
+
+<div class="teams-container>">
+    {% for team in teams.teams %}
+    <div class="team-item">
+        <img src="{{ team.strLogo }}">
+        <p>{{ team.strTeam }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
