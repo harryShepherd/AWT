@@ -30,7 +30,6 @@ header h1 {
     margin: 10px
 }
 
-
 footer {
     background-color: rgb(38, 128, 218);
     text-align: center;
@@ -87,6 +86,56 @@ p {
     margin: 5%;
 }
 
+.teams-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: dodgerblue;
+    padding: 1%;
+    margin: 5;
+}
+
 .team-item {
-    background-color: #DDD;
+    background-color: grey;
+    border: 1px solid white;
+    padding: 1%;
+    margin: 5%;
+    border-radius: 5em;
+    text-align: center;
+}
+
+.team-item img {
+    width: 50%;
+    padding: 2%;
+    border-radius: 2em;
+}
+
+.team-item p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
+}
+
+.drivers-container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: dodgerblue;
+    padding: 1%;
+    margin: 5;
+}
+
+.drivers-item {
+    background-color: whitesmoke;
+    border: 1px solid black;
+    padding: 1%;
+    height: 100%;
+    text-align: center;
+}
+
+.drivers-item img {
+    border-radius: 50%;
+    width: 50%;
+}
+
+.drivers-item p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
 }

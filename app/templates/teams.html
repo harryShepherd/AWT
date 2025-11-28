@@ -4,12 +4,14 @@
 
 <h1>{{ league.strLeague }} Teams</h1>
 
-<div class="teams-container>">
+<div class="teams-container">
     {% for team in teams.teams %}
-    <div class="team-item">
-        <img src="{{ team.strLogo }}">
-        <p>{{ team.strTeam }}</p>
-    </div>
+    <a href="drivers?l={{ league.idLeague }}&t={{ team.idTeam }}">
+        <div class="team-item">
+            <img src="{{ team.strLogo }}">
+            <p>{{ team.strTeam }}</p>
+        </div>
+    </a>
     {% endfor %}
 </div>
 

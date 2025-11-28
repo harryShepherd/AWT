@@ -1,7 +1,7 @@
 import sqlite3
 import bcrypt
 from functools import wraps
-from flask import g
+from flask import g, flash
 
 db_location = 'var/accounts.db'
 
@@ -40,11 +40,13 @@ def register_account(app, username, email, password):
     app.logger.info(f"Excecuting statement: {stmnt}")
 
     try:
-        app.logger.info("Success")
         db.cursor().execute(stmnt)
         db.commit()
-    except :
+        app.logger.info("Success")
+        flash("Account registered. Please log in.")
+    except:
         app.logger.info("Failed")
+        flash("Failed to create your account. Please try again.")
         return False
 
     return True
@@ -74,8 +76,10 @@ def validate_account(app, username, password):
             app.logger.info(f"Successfully logged in for {username}")
             return True
         else:
+            flash("The username or password you entered was invalid.")
             app.logger.info(f"Failed login attempt for {username}")
             return False
     else:
+        flash("The username or password you entered was invalid.")
         app.logger.info(f"Attempted to log into a non-existent account")
         return False

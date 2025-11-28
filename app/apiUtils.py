@@ -26,7 +26,7 @@ def getUpcomingEvent(app, leagueId):
     except:
         return
     
-def getLeagueTeams(app, leagueId):
+def getAllLeagueTeams(app, leagueId):
     app.logger.info(f"Retreiving teams for league {leagueId}")
 
     base_url = "https://www.thesportsdb.com/api/v1/json/"
@@ -40,21 +40,28 @@ def getLeagueTeams(app, leagueId):
     except:
         return
     
-# TODO: Sort this shit out
-def getLeagueDrivers(app, leagueId):
-    app.logger.info(f"Retreiving drivers for league {leagueId}")
+def getLeagueTeam(app, teamId):
+    app.logger.info(f"Retreiving data for team {teamId}")
 
-    teams = getLeagueTeams(leagueId)
+    base_url = "https://www.thesportsdb.com/api/v1/json/"
+    api_key = "123/"
+    request = "lookupteam.php?id="
 
+    output = requests.get(base_url + api_key + request + teamId).json()
+
+    return output["teams"][0]
+
+def getTeamDrivers(app, leagueId, teamId):
+    app.logger.info(f"Retreiving drivers for league team {teamId} in league {leagueId}")
     output = []
 
     base_url = "https://www.thesportsdb.com/api/v1/json/"
     api_key = "123/"
     request = "lookup_all_players.php?id="
 
-    for team in teams["teams"]:
-        output.append(
-            requests.get(base_url + api_key + request + team["idTeam"]).json()
-        )
+    try:
+        output = requests.get(base_url + api_key + request + teamId).json()
+    except:
+        return
 
     return output

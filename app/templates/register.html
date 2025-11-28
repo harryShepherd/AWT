@@ -8,9 +8,16 @@
     <input type="username" placeholder="Username " name="username">
     <input type="email" placeholder="Email " name="email">
     <input type="password" placeholder="Password " name="password">
-    <button type="submit" class="btn" name="button" value="login">
-        Log In
+    <button type="submit" class="btn" name="button" value="create">
+        Create
     </button>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 </form>
 
 {% endblock %}
