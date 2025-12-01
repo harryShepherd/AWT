@@ -1,6 +1,8 @@
+import datetime
 from flask import Flask, render_template, request, url_for, redirect, g, session, flash, abort
 from apiUtils import *
 from account import *
+from articles import *
 from logger import *
 import sqlite3
 import markdown
@@ -28,21 +30,16 @@ for league in league_ids:
     app.logger.info(f"Getting league data for league {league}")
     league_data.update({league : getLeagueData(app, league)}) 
 
-# Database
-db_location = "var/accounts.db"
+# Databases
 with app.app_context():
-    db = get_db(app)
-    with app.open_resource('var/schema.sql', mode='r') as f:
-        app.logger.info(f"Executing var/schema.sql")
-        db.cursor().executescript(f.read())
-    db.commit()
+    initialise_account_db(app)
+    initialise_article_db(app)
 
 # Articles
 articles_location = "articles"
 
 @app.route("/")
 def index():
-
     articles = []
 
     # Get the list of articles
@@ -50,17 +47,45 @@ def index():
         if filename.endswith(".md"):
             name = filename[:-3]
             title = name.replace("_", " ")
-
             articles.append({
                 "name": name,
                 "title": title.title()
             })
     
-    return render_template("index.html", title="Home", articles=articles, logged_in = session.get('logged_in', False), username = session.get('username', ''), leagueIds=league_ids, leagues=league_data)
+    return render_template(
+        "index.html",
+        title="Home",
+        articles=articles,
+        logged_in = session.get('logged_in', False),
+        username = session.get('username', ''),
+        leagueIds=league_ids,
+        leagues=league_data
+        )
 
-@app.route('/article/<name>')
+@app.route('/article/<name>', methods=['GET', 'POST'])
 def article(name):
+
+    if request.method == 'POST':
+        # Check if we're logged in
+        if session.get('logged_in', False):
+            # Get the comment
+            commentString = request.form['comment-box']
+            commentTimestamp = datetime.datetime.now().strftime("%d-%m-%Y %I:%M %p")
+
+            # Create the comment
+            if not create_comment(app, name, commentString, session.get('username', ''), commentTimestamp):
+                # We failed
+                app.logger.info(f"Failed to create comment on {name}")
+                
+            else:
+                # We succeeded
+                app.logger.info(f"Successfully published comment to article {name}")
+        else:
+            app.logger.info(f"Tried to leave a comment without being logged in.")
+
     app.logger.info(f"Loading article {name}")
+
+    # Get the article path
     md_path = os.path.join(articles_location, f"{name}.md")
 
     if not os.path.exists(md_path):
@@ -71,9 +96,24 @@ def article(name):
         app.logger.info(f"Opening {md_path}")
         md_text = file.read()
 
+        # Convert the markdown into html
         article_html = markdown.markdown(md_text, extensions=["fenced_code", "tables"])
 
-        return render_template("articles.html", article=article_html, title=name.replace("_", " ").title())  
+        # Get the number of comments on this article
+        total_comments = get_total_comments(app, name)
+
+        # Get the  comments
+        comments = get_comments(app, name)
+
+        return render_template(
+            "articles.html",
+            title=name.replace("_", " ").title(),
+            article=article_html,
+            total_comments=total_comments,
+            comments=comments,
+            logged_in = session.get('logged_in', False),
+            username = session.get('username', '')
+        )
 
 @app.route('/league')
 def leagues():
@@ -86,7 +126,14 @@ def leagues():
     # Get specific league data
     upcoming_event = getUpcomingEvent(app, leagueId)
 
-    return render_template("league.html", title=league_data[leagueId]["strLeague"],logged_in = session.get('logged_in', False), username = session.get('username', ''), league=league_data[leagueId], nextEvent=upcoming_event)
+    return render_template(
+        "league.html",
+        title=league_data[leagueId]["strLeague"],
+        logged_in = session.get('logged_in', False),
+        username = session.get('username', ''),
+        league=league_data[leagueId],
+        nextEvent=upcoming_event
+        )
 
 @app.route('/league/teams')
 def leagueTeams():
@@ -99,7 +146,14 @@ def leagueTeams():
     # Get data
     league_teams = getAllLeagueTeams(app, leagueId)
     
-    return render_template('teams.html', title=league_data[leagueId]["strLeague"] + " Teams",logged_in = session.get('logged_in', False), username = session.get('username', ''), league=league_data[leagueId], teams=league_teams)
+    return render_template(
+        'teams.html',
+        title=league_data[leagueId]["strLeague"] + " Teams",
+        logged_in = session.get('logged_in', False),
+        username = session.get('username', ''),
+        league=league_data[leagueId],
+        teams=league_teams
+        )
 
 @app.route('/league/team')
 def leagueTeamCloseUp():
@@ -111,7 +165,6 @@ def leagueTeamCloseUp():
     # Invalid url args
     if(leagueId == '' or teamId == ''):
         return redirect(url_for('index'))
-
 
 @app.route('/league/drivers')
 def leagueDrivers():
@@ -126,7 +179,34 @@ def leagueDrivers():
     # Get data
     league_drivers = getTeamDrivers(app, leagueId, teamId)
 
-    return render_template('drivers.html', title=league_data[leagueId]["strLeague"] + " Drivers",logged_in = session.get('logged_in', False), username = session.get('username', ''), league=league_data, drivers=league_drivers)
+    return render_template(
+        'drivers.html',
+        title=league_data[leagueId]["strLeague"] + " Drivers",
+        logged_in = session.get('logged_in', False),
+        username = session.get('username', ''),
+        league=league_data,
+        drivers=league_drivers
+        )
+
+@app.route('/driver')
+def individualDriver():
+
+    # Get url args
+    driverId = request.args.get('d', '')
+
+    if(driverId == ''):
+        return redirect(url_for('index'))
+    
+    # Get data
+    driver_data = getDriver(app, driverId)['players'][0]
+
+    return render_template(
+        'driver.html',
+        title="",
+        logged_in = session.get('logged_in', False),
+        username=session.get('username', ''),
+        driver=driver_data
+        )
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -140,7 +220,12 @@ def login():
 
             return redirect(url_for('index'))
 
-    return render_template('login.html', title="Login", logged_in = session.get('logged_in', False), username = session.get('username', ''))
+    return render_template(
+        'login.html',
+        title="Login",
+        logged_in = session.get('logged_in', False),
+        username = session.get('username', '')
+        )
 
 @app.route('/logout')
 def logout():
@@ -163,11 +248,20 @@ def register():
         else:
             app.logger.info(f"Registered account with username: {username}, email: {email}")
             
-    return render_template('register.html', title="Register", logged_in = session.get('logged_in', False), username = session.get('username', ''))
+    return render_template(
+        'register.html',
+        title="Register",
+        logged_in = session.get('logged_in', False),
+        username = session.get('username', '')
+        )
 
 # Database stuff
 @app.teardown_appcontext
 def close_db_connection(app):
-    db = getattr(g, 'db', None)
-    if db is not None:
-        db.close()
+    accounts_db = getattr(g, 'accounts_db', None)
+    if accounts_db is not None:
+        accounts_db.close()
+        
+    articles_db = getattr(g, 'articles_db', None)
+    if articles_db is not None:
+        articles_db.close()

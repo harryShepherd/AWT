@@ -9,10 +9,12 @@
         {% if driver["strPosition"] == "Manager" %}
             <!-- Do nothing -->
         {% else %}
-            <div class="drivers-item">
-                <img src="{{ driver.strThumb }}">
-                <p>{{ driver.strPlayer }}</p>
-            </div>
+            <a href="/driver?d={{ driver.idPlayer }}">
+                <div class="drivers-item">
+                    <img src="{{ driver.strThumb }}">
+                    <p>{{ driver.strPlayer }}</p>
+                </div>
+            </a>
         {% endif %}
     {% endfor %}
 </div>

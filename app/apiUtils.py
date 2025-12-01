@@ -63,5 +63,15 @@ def getTeamDrivers(app, leagueId, teamId):
         output = requests.get(base_url + api_key + request + teamId).json()
     except:
         return
+    
+    return output
+    
+def getDriver(app, driverId):
+    app.logger.info(f"Retreiving info for driver {driverId}")
 
+    base_url = "https://www.thesportsdb.com/api/v1/json/"
+    api_key = "123/"
+    request = "lookupplayer.php?id="
+
+    output = requests.get(base_url + api_key + request + driverId).json()
     return output

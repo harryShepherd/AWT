@@ -9,10 +9,10 @@
         <ul id="navigation">
             {% if logged_in %}
                 <li>Hello, {{ username }}</li>
-                <a href="logout"><li>Log Out</li></lio></a>
+                <a href="/logout"><li>Log Out</li></lio></a>
             {% else %}
-                <a href="register"><li>Register</li></a>
-                <a href="login"><li>Log In</li></a>
+                <a href="/register"><li>Register</li></a>
+                <a href="/login"><li>Log In</li></a>
             {% endif %}
         </ul>
     </header>

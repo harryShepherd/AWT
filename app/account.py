@@ -5,19 +5,25 @@ from flask import g, flash
 
 db_location = 'var/accounts.db'
 
-def get_db(app):
+def initialise_account_db(app):
+    account_db = get_account_db(app)
+    with app.open_resource('var/account_schema.sql', mode='r') as f:
+        app.logger.info(f"Executing var/account_schema.sql")
+        account_db.cursor().executescript(f.read())
+
+def get_account_db(app):
     app.logger.info(f"Retrieving database")
 
-    db = getattr(g, 'db', None)
+    db = getattr(g, 'accounts_db', None)
     if db is None: 
         db = sqlite3.connect(db_location)
-        g.db = db
+        g.accounts_db = db
     return db
 
 def check_account_registered(app, username, email):
     app.logger.info(f"Checking if {username}, {email} is a registered account")
 
-    db = get_db(app)
+    db = get_account_db(app)
 
     result = db.cursor().execute(f"SELECT COUNT(*) FROM accounts WHERE accounts.username='{username}' OR accounts.email='{email}'")
 
@@ -28,7 +34,7 @@ def check_account_registered(app, username, email):
     return False
 
 def register_account(app, username, email, password):
-    db = get_db(app)
+    db = get_account_db(app)
 
     if check_account_registered(app, username, email):
         return False
@@ -52,7 +58,7 @@ def register_account(app, username, email, password):
     return True
 
 def get_number_rows(app):
-    db = get_db(app)
+    db = get_account_db(app)
 
     result = db.cursor().execute("SELECT COUNT(*) FROM accounts")
     rows = result.fetchall()[0][0]
@@ -61,7 +67,7 @@ def get_number_rows(app):
     return rows
 
 def validate_account(app, username, password):
-    db = get_db(app)
+    db = get_account_db(app)
 
     # Retrieve the username's related password + hash
     stmnt = f"SELECT password_hashed, salt FROM accounts WHERE accounts.username='{username}'"

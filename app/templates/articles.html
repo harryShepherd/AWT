@@ -4,4 +4,22 @@
 
 {{ article | safe }}
 
+<div class="comments-container">
+    <p>Comments - {{ total_comments }}</p>
+    {% for comment in comments %}
+    <div class="comment">
+        <h3>{{ comment[2] }}</h3>
+        <p>{{ comment[3] }}</p>
+        <p>{{ comment[0] }}</p>
+    </div>
+    {% endfor %}
+
+    <form method="post">
+        <p><label for="comment-box">Leave a comment:</label></p>
+        <textarea id="comment-box" name="comment-box" rows="5" cols="100"></textarea>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
 {% endblock %}
