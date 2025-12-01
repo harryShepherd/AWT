@@ -33,3 +33,14 @@ input[type=submit] {
 input[type=submit]:hover {
     background-color: #6bb4fa;
 }
+
+textarea {
+    display: inline-block;
+    box-sizing: border-box;
+    border: none;
+    border: 1px solid dodgerblue;
+    padding: 2%;
+    width: 100%;
+    font-family: 'Roboto-Regular';
+    font-size: 1rem;
+}

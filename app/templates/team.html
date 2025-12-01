@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
 {% block stylesheet %}
-<link rel="stylesheet" href="{{ url_for('static', filename='drivers.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='team.css') }}">
 {% endblock %}
 
 {% block content %}
 
-<h1>{{ drivers["player"][0]["strTeam"] }} Drivers</h1>
+<h1>{{ team["player"][0]["strTeam"] }}</h1>
 
 <div class="drivers-container">
-    {% for driver in drivers["player"] %}
+    {% for driver in team["player"] %}
         {% if driver["strPosition"] == "Manager" %}
             <!-- Do nothing -->
         {% else %}

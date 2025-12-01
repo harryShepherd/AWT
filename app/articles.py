@@ -1,7 +1,24 @@
 import sqlite3
 from flask import g
+import os
 
 db_location = 'var/article-comments.db'
+articles_location = 'static/articles'
+
+def get_all_articles(app):
+    articles = []
+
+    # Get the list of articles
+    for filename in os.listdir(articles_location):
+        if filename.endswith(".md"):
+            name = filename[:-3]
+            title = name.replace("_", " ")
+            articles.append({
+                "name": name,
+                "title": title.title()
+            })
+
+    return articles
 
 def initialise_article_db(app):
     article_db = get_article_comments_db(app)

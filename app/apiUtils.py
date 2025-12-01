@@ -51,8 +51,8 @@ def getLeagueTeam(app, teamId):
 
     return output["teams"][0]
 
-def getTeamDrivers(app, leagueId, teamId):
-    app.logger.info(f"Retreiving drivers for league team {teamId} in league {leagueId}")
+def getTeam(app, teamId):
+    app.logger.info(f"Retreiving drivers for league team {teamId}")
     output = []
 
     base_url = "https://www.thesportsdb.com/api/v1/json/"

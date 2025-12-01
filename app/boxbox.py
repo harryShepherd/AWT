@@ -38,22 +38,10 @@ with app.app_context():
     initialise_account_db(app)
     initialise_article_db(app)
 
-# Articles
-articles_location = "articles"
-
 @app.route("/")
 def index():
-    articles = []
 
-    # Get the list of articles
-    for filename in os.listdir(articles_location):
-        if filename.endswith(".md"):
-            name = filename[:-3]
-            title = name.replace("_", " ")
-            articles.append({
-                "name": name,
-                "title": title.title()
-            })
+    articles = get_all_articles(app)
     
     return render_template(
         "index.html",
@@ -79,7 +67,6 @@ def article(name):
             if not create_comment(app, name, commentString, session.get('username', ''), commentTimestamp):
                 # We failed
                 app.logger.info(f"Failed to create comment on {name}")
-                
             else:
                 # We succeeded
                 app.logger.info(f"Successfully published comment to article {name}")
@@ -128,6 +115,7 @@ def leagues():
 
     # Get specific league data
     upcoming_event = getUpcomingEvent(app, leagueId)
+    league_teams = getAllLeagueTeams(app, leagueId)
 
     return render_template(
         "league.html",
@@ -135,60 +123,29 @@ def leagues():
         logged_in = session.get('logged_in', False),
         username = session.get('username', ''),
         league=league_data[leagueId],
+        teams=league_teams,
         nextEvent=upcoming_event
         )
 
-@app.route('/league/teams')
-def leagueTeams():
-    leagueId = request.args.get('l', '')
-
-    # No league selected - go home
-    if(leagueId == ''):
-        return redirect(url_for('index'))
-    
-    # Get data
-    league_teams = getAllLeagueTeams(app, leagueId)
-    
-    return render_template(
-        'teams.html',
-        title=league_data[leagueId]["strLeague"] + " Teams",
-        logged_in = session.get('logged_in', False),
-        username = session.get('username', ''),
-        league=league_data[leagueId],
-        teams=league_teams
-        )
-
-@app.route('/league/team')
+@app.route('/team')
 def leagueTeamCloseUp():
 
     # Get url args
-    leagueId = request.args.get('l', '')
     teamId = request.args.get('t', '')
 
     # Invalid url args
-    if(leagueId == '' or teamId == ''):
+    if(teamId == ''):
         return redirect(url_for('index'))
-
-@app.route('/league/drivers')
-def leagueDrivers():
-
-    # Get url args
-    leagueId = request.args.get('l', '')
-    teamId = request.args.get('t', '')
-
-    if(teamId == '' or leagueId == ''):
-        return redirect(url_for('index'))
-
+    
     # Get data
-    league_drivers = getTeamDrivers(app, leagueId, teamId)
+    team = getTeam(app, teamId)
 
     return render_template(
-        'drivers.html',
-        title=league_data[leagueId]["strLeague"] + " Drivers",
+        'team.html',
+        title=team["player"][0]["strTeam"],
         logged_in = session.get('logged_in', False),
         username = session.get('username', ''),
-        league=league_data,
-        drivers=league_drivers
+        team=team
         )
 
 @app.route('/driver')
