@@ -39,6 +39,10 @@ def register_account(app, username, email, password):
     if check_account_registered(app, username, email):
         return False
     
+    if(username == "" or email == "" or password == ""):
+        flash("The username, email, or password you entered was invalid.")
+        return False
+    
     salt = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
 

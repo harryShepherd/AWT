@@ -4,20 +4,22 @@
 
 <h1>Register</h1>
 
-<form name="register_form" action="" method="post">
-    <input type="username" placeholder="Username " name="username">
-    <input type="email" placeholder="Email " name="email">
-    <input type="password" placeholder="Password " name="password">
-    <button type="submit" class="btn" name="button" value="create">
-        Create
-    </button>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <p>{{ message }}</p>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-</form>
+<div class="form_container">
+    <form name="register_form" action="" method="post">
+        <input type="email" placeholder="Email" name="email">
+        <input type="username" placeholder="Username" name="username">
+        <input type="password" placeholder="Password" name="password">
+        <button type="submit" class="btn" name="button" value="create">
+            Create Account
+        </button>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </form>
+</div>
 
 {% endblock %}

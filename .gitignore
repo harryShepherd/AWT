@@ -2,3 +2,4 @@ app/__pycache__/
 app/env/
 app/var/
 app/articles/
+app/static/font/

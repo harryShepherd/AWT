@@ -5,16 +5,18 @@
 <div class="league-information">
     <img class="league-banner" src="{{ league.strBanner }}">
     <h1>{{ league.strLeague }}</h1>
-    <p> {{ league.strDescriptionEN }} </p>
+    <hr>
+    <p class="league-description"">{{ league.strDescriptionEN }}</p>
 </div>
 
 <div class="league-next-event">
     {% if nextEvent %}
-    <h1>{{ nextEvent.strEvent }}</h1>
-    <p>{{ nextEvent.strCountry }}</p>
-    <p>{{ nextEvent.strTimestamp }}</p>
+        <h1>Upcoming Race</h1>
+        <h2>{{ nextEvent.strEvent }}</h2>
+        <p>{{ nextEvent.strCountry }}</p>
+        <p>{{ nextEvent.strTimestamp }}</p>
     {% else %}
-    <h1>This season has concluded.</h1>
+        <h1>This season has concluded.</h1>
     {% endif %}
 </div>
 

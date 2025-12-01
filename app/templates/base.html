@@ -8,11 +8,11 @@
         <a href="/"><h1 id="header-title">BoxBox</h1></a>
         <ul id="navigation">
             {% if logged_in %}
-                <li>Hello, {{ username }}</li>
-                <a href="/logout"><li>Log Out</li></lio></a>
+                <li><a href="/logout">Log Out</a></li>
+                <li>Hello, {{ username }}!</li>
             {% else %}
-                <a href="/register"><li>Register</li></a>
-                <a href="/login"><li>Log In</li></a>
+                <li><a href="/register">Register</a></li>
+                <li><a href="/login">Log In</a></li>
             {% endif %}
         </ul>
     </header>
@@ -24,6 +24,6 @@
     </section>
 
     <footer>
-        <p>BoxBox Footer</p>
+        <p>This is the footer for the website BoxBox. This website has been created as part of a university project. (C) 2025</p>
     </footer>
 </body>

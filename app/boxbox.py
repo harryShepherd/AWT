@@ -19,7 +19,10 @@ logs(app)
 league_ids = [
     "4370",     # Formula 1
     "4413",     # WEC
-    "4486"      # Formula 2
+    "4486",     # Formula 2
+    "4371",     # Formula E
+    "4407",     # Moto GP
+    "4373",     # IndyCar
 ]
 
 # League data dictionary

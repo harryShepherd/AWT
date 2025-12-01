@@ -4,19 +4,25 @@
 
 <h1>Login</h1>
 
-<form name="login_form" action="" method="post">
-    <input type="username" placeholder="Username " name="username">
-    <input type="password" placeholder="Password " name="password">
-    <button type="submit" class="btn" name="button" value="login">
-        Log In
-    </button>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <p>{{ message }}</p>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-</form>
+<div class="form_container">
+    <form name="login_form" action="" method="post">
+        <div>
+            <input type="username" placeholder="Username" name="username">
+        </div>
+        <div>
+            <input type="password" placeholder="Password" name="password">
+        </div>
+        <button type="submit" class="btn" name="button" value="login">
+            Log In
+        </button>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </form>
+</div>
 
 {% endblock %}

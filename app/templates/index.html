@@ -6,13 +6,11 @@
 <hr>
 <div class="articles-container">
     {% for article in articles %}
-
         <a href="article/{{ article.name }}">
             <div class="article-item">
                     <p>{{ article.title }}</p>
             </div>
         </a>
-        
     {% endfor %}
 </div>
 

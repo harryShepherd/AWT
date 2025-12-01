@@ -40,6 +40,4 @@ The 2025 Qatar GP showcased why circuts like Lusail remain crucial and controver
 
 If anything, this weekend proved that in modern Formula 1, speed alone isn’t enough — you need precision, foresight and a bit of daring. The title fight now heads into Abu Dhabi wide open.  
 
----
-
 *Stay tuned for the final round — it’s set to be a season-ending classic.* 

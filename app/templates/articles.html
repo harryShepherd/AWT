@@ -5,7 +5,8 @@
 {{ article | safe }}
 
 <div class="comments-container">
-    <p>Comments - {{ total_comments }}</p>
+    <hr>
+    <h2>Comments - {{ total_comments }}</h2>
     {% for comment in comments %}
     <div class="comment">
         <h3>{{ comment[2] }}</h3>
@@ -14,12 +15,14 @@
     </div>
     {% endfor %}
 
-    <form method="post">
-        <p><label for="comment-box">Leave a comment:</label></p>
-        <textarea id="comment-box" name="comment-box" rows="5" cols="100"></textarea>
-        <br>
-        <input type="submit" value="Submit">
-    </form>
+    <div class="comment-submission">
+        <form method="post">
+            <h2><label for="comment-box">Leave a comment:</label></h2>
+            <textarea id="comment-box" placeholder="Leave your comment here" name="comment-box" rows="5" cols="100"></textarea>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 </div>
 
 {% endblock %}

@@ -1,3 +1,18 @@
+@font-face {
+  font-family: 'Nexa-Light';
+  src: url('font/Nexa-ExtraLight.ttf'); 
+}
+
+@font-face {
+  font-family: 'Nexa-Heavy';
+  src: url('font/Nexa-Heavy.ttf'); 
+}
+
+@font-face {
+    font-family: 'Roboto-Regular';
+    src: url('font/roboto/Roboto-Regular.ttf')
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,7 +23,7 @@ header {
     margin: 0;
     width: 100%;
     position: sticky;
-    min-height: 60px;
+    height: 8vh;
     display: flex;
     align-items: right;
     justify-content: space-between;
@@ -16,67 +31,70 @@ header {
 
 header ul {
     list-style-type: none;
-    text-align: center;
-    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 1%;
+    padding: 0
 }
 
 header li {
-    font-size: 125%;
-    margin: 5%;
+    float: right;
+    color: white;
+    display: block;
+    font-family: 'Nexa-Heavy';
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+header a {
+    color: white;
+}
+
+header li a:hover {
+    background-color: lightskyblue;
 }
 
 header h1 {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Nexa-Heavy';
     margin: 10px
+}
+
+header a {
+    text-decoration: none;
 }
 
 footer {
     background-color: rgb(38, 128, 218);
     text-align: center;
+    font-family: 'Nexa-Heavy';
+    font-size: 1rem;
+    height: 6vh;
+    color: white;
 }
 
 footer p {
-    padding: 1%;
+    padding-top: 1%;
 }
 
 .content {
     width: 75%;
+    min-height: calc(100vh - 8vh - 6vh);
     margin: auto;
     background-color: white;
 }
 
-p {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1em;
+.content h1 {
+    font-family: 'Nexa-Heavy';
+    font-size: 3rem;
 }
 
-.league-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    background-color: dodgerblue;
-    border-radius: 10px;
-    padding: 1%;
-    margin: 5%;
+.content h2 {
+    font-family: 'Nexa-Heavy';
 }
 
-.league-item {
-    background-color: whitesmoke;
-    border: 1px solid black;
-    padding: 10%;
-    text-align: center;
-}
-
-.league-item img {
-    width: 200px;
-}
-
-.league-item p {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1em;
-}
-
-.league-banner {
-    width: 100%;
+.content p {
+    font-family: 'Roboto-Regular';
 }
 
 .articles-container {
@@ -88,12 +106,73 @@ p {
     margin: 5%;
 }
 
+.articles-container a {
+    text-decoration: none;
+}
+
 .article-item {
     text-align: center;
     padding: 1%;
     margin: 0.5%;
-    background-color: whitesmoke;
-    border: 1px solid black;
+    background-color: #202020;
+    border-radius: 15px;
+}
+
+.article-item p {
+    font-family: 'Nexa-Light';
+    color: white;
+    font-size: 2rem;
+}
+
+.article-item:hover {
+    background-color: lightslategray;
+}
+
+.league-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: dodgerblue;
+    border-radius: 10px;
+    padding: 1%;
+    margin: 5%;
+}
+
+.league-container a {
+    text-decoration: none;
+}
+
+.league-item {
+    background-color: #202020;
+    border-radius: 15px;
+    padding: 10%;
+    margin: 2.5%;
+    text-align: center;
+}
+
+.league-item:hover {
+    background-color: lightslategray;
+}
+
+.league-item img {
+    width: 200px;
+}
+
+.league-item p {
+    color: white;
+    font-family: 'Nexa-Light';
+    font-size: 2rem;
+}
+
+.league-banner {
+    width: 100%;
+}
+
+.league-description {
+    padding-top: 2%;
+}
+
+.league-next-event {
+    padding-top: 2%;
 }
 
 .teams-container{
@@ -149,4 +228,61 @@ p {
 .drivers-item p {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1em;
+}
+
+.form_container {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
+input[type=username], input[type=email], input[type=password], textarea {
+    display: inline-block;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid dodgerblue;
+    padding: 2%;
+    width: 100%;
+    font-family: 'Roboto-Regular';
+    font-size: 1.25rem;
+}
+
+input:focus {
+    border: 1px solid dodgerblue;
+}
+
+input[type=submit] {
+    font-family: 'Nexa-Heavy';
+    font-size: 1.25rem;
+    margin: auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 30%;
+    color: white;
+    background-color: #1e90ff;
+    border: none;
+}
+
+input[type=submit]:hover {
+    background-color: #6bb4fa;
+}
+
+.comments-container {
+    margin-top: 2.5%;
+}
+
+.comment-submission {
+    margin-top: 2.5%;
+}
+
+.comment {
+    margin-top: 1%;
+}
+
+.comment h3 {
+    font-family: 'Nexa-Heavy';
+}
+
+.comment p {
+    font-family: 'Roboto-Regular';
 }
