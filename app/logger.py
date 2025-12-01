@@ -18,6 +18,9 @@ def init(app):
         app.config['log_file'] = config.get("logging", "name")
         app.config['log_location'] = config.get("logging", "location")
         app.config['log_level'] = config.get("logging", "level")
+        
+        app.config['thesportsdb_apikey'] = config.get("apiKeys", "thesportsdb")
+        app.config['secretkey'] = config.get("apiKeys", "secretkey")
 
     except:
         print("Could not read config file from: " + config_location)

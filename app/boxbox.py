@@ -9,11 +9,12 @@ import markdown
 import os
 
 app = Flask(__name__)
-app.secret_key = 'MBIOERMVKLDAFGIOERJGIPERG'
 
 # Logging
 init(app)
 logs(app)
+
+app.secret_key = app.config['secretkey']
 
 # Initialisation work
 league_ids = [
@@ -139,13 +140,15 @@ def leagueTeamCloseUp():
     
     # Get data
     team = getTeam(app, teamId)
+    drivers = getTeamPlayers(app, teamId)
 
     return render_template(
         'team.html',
-        title=team["player"][0]["strTeam"],
+        title=team["teams"][0]["strTeam"],
         logged_in = session.get('logged_in', False),
         username = session.get('username', ''),
-        team=team
+        team=team,
+        drivers=drivers
         )
 
 @app.route('/driver')
