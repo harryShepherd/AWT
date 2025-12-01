@@ -1,0 +1,69 @@
+/* Articles */
+
+.articles-container {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    background-color: dodgerblue;
+    border-radius: 10px;
+    padding: 1%;
+    margin: 5%;
+}
+
+.articles-container a {
+    text-decoration: none;
+}
+
+.article-item {
+    text-align: center;
+    padding: 1%;
+    margin: 0.5%;
+    background-color: #202020;
+    border-radius: 15px;
+}
+
+.article-item p {
+    font-family: 'Nexa-Light';
+    color: white;
+    font-size: 2rem;
+}
+
+.article-item:hover {
+    background-color: lightslategray;
+}
+
+/* Leagues */
+
+.league-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: dodgerblue;
+    border-radius: 10px;
+    padding: 1%;
+    margin: 5%;
+}
+
+.league-container a {
+    text-decoration: none;
+}
+
+.league-item {
+    background-color: #202020;
+    border-radius: 15px;
+    padding: 10%;
+    margin: 2.5%;
+    text-align: center;
+}
+
+.league-item:hover {
+    background-color: lightslategray;
+}
+
+.league-item img {
+    width: 200px;
+}
+
+.league-item p {
+    color: white;
+    font-family: 'Nexa-Light';
+    font-size: 2rem;
+}

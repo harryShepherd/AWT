@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ url_for('static', filename='league.css') }}">
+{% endblock %}
+
 {% block content %}
 
 <div class="league-information">

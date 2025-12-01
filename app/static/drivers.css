@@ -1,0 +1,25 @@
+.drivers-container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: dodgerblue;
+    padding: 1%;
+    margin: 5;
+}
+
+.drivers-item {
+    background-color: whitesmoke;
+    border: 1px solid black;
+    padding: 1%;
+    height: 100%;
+    text-align: center;
+}
+
+.drivers-item img {
+    border-radius: 50%;
+    width: 50%;
+}
+
+.drivers-item p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
+}

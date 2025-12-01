@@ -1,0 +1,36 @@
+.form_container {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
+input[type=username], input[type=email], input[type=password], textarea {
+    display: inline-block;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid dodgerblue;
+    padding: 2%;
+    width: 100%;
+    font-family: 'Roboto-Regular';
+    font-size: 1.25rem;
+}
+
+input:focus {
+    border: 1px solid dodgerblue;
+}
+
+.btn {
+    font-family: 'Nexa-Heavy';
+    font-size: 1.25rem;
+    margin: auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 30%;
+    color: white;
+    background-color: #1e90ff;
+    border: none;
+}
+
+.btn:hover {
+    background-color: #6bb4fa;
+}

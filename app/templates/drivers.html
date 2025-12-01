@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ url_for('static', filename='drivers.css') }}">
+{% endblock %}
+
 {% block content %}
 
 <h1>{{ drivers["player"][0]["strTeam"] }} Drivers</h1>
