@@ -38,6 +38,7 @@ for league in league_ids:
 with app.app_context():
     initialise_account_db(app)
     initialise_article_db(app)
+    initialise_event_db(app)
 
 @app.route("/")
 def index():
@@ -65,7 +66,7 @@ def article(name):
             commentTimestamp = datetime.datetime.now().strftime("%d-%m-%Y %I:%M %p")
 
             # Create the comment
-            if not create_comment(app, name, commentString, session.get('username', ''), commentTimestamp):
+            if not create_article_comment(app, name, commentString, session.get('username', ''), commentTimestamp):
                 # We failed
                 app.logger.info(f"Failed to create comment on {name}")
             else:
@@ -87,24 +88,26 @@ def article(name):
         app.logger.info(f"Opening {md_path}")
         md_text = file.read()
 
-        # Convert the markdown into html
-        article_html = markdown.markdown(md_text, extensions=["fenced_code", "tables"])
+    file.close()
 
-        # Get the number of comments on this article
-        total_comments = get_total_comments(app, name)
+    # Convert the markdown into html
+    article_html = markdown.markdown(md_text, extensions=["fenced_code", "tables"])
 
-        # Get the  comments
-        comments = get_comments(app, name)
+    # Get the number of comments on this article
+    total_comments = get_total_article_comments(app, name)
 
-        return render_template(
-            "articles.html",
-            title=name.replace("_", " ").title(),
-            article=article_html,
-            total_comments=total_comments,
-            comments=comments,
-            logged_in = session.get('logged_in', False),
-            username = session.get('username', '')
-        )
+    # Get the  comments
+    comments = get_article_comments(app, name)
+
+    return render_template(
+        "articles.html",
+        title=name.replace("_", " ").title(),
+        article=article_html,
+        total_comments=total_comments,
+        comments=comments,
+        logged_in = session.get('logged_in', False),
+        username = session.get('username', '')
+    )
 
 @app.route('/league')
 def leagues():
@@ -118,6 +121,11 @@ def leagues():
     upcoming_event = getUpcomingEvent(app, leagueId)
     league_teams = getAllLeagueTeams(app, leagueId)
 
+    if leagueId == '4371':
+        schedule = getSeasonSchedule(app, leagueId, '2025-2026')
+    else:
+        schedule = getSeasonSchedule(app, leagueId, 2025)
+
     return render_template(
         "league.html",
         title=league_data[leagueId]["strLeague"],
@@ -125,7 +133,8 @@ def leagues():
         username = session.get('username', ''),
         league=league_data[leagueId],
         teams=league_teams,
-        nextEvent=upcoming_event
+        nextEvent=upcoming_event,
+        schedule=schedule
         )
 
 @app.route('/team')
@@ -170,6 +179,52 @@ def individualDriver():
         username=session.get('username', ''),
         driver=driver_data
         )
+
+@app.route('/event', methods=['GET', 'POST'])
+def event():
+
+    # Get URL args
+    eventId = request.args.get('e', '')
+
+    if eventId == '':
+        return redirect(url_for('index'))
+    
+    if request.method == 'POST':
+        # Check if we're logged in
+        if session.get('logged_in', False):
+            # Get the comment
+            commentString = request.form['comment-box']
+            commentTimestamp = datetime.datetime.now().strftime("%d-%m-%Y %I:%M %p")
+
+            # Create the comment
+            if not create_event_comment(app, eventId, commentString, session.get('username', ''), commentTimestamp):
+                # We failed
+                app.logger.info(f"Failed to create comment on event {eventId}")
+            else:
+                # We succeeded
+                app.logger.info(f"Successfully published comment to event {eventId}")
+        else:
+            app.logger.info(f"Tried to leave a comment without being logged in.")
+
+    # Get data
+    event_data = getEvent(app, eventId)
+
+    total_comments = get_total_event_comments(app, eventId)
+
+    comments = get_event_comments(app, eventId)
+
+    results = getEventResults(app, eventId)
+
+    return render_template(
+        'event.html',
+        title="",
+        logged_in = session.get('logged_in', False),
+        username=session.get('username', ''),
+        event=event_data,
+        total_comments=total_comments,
+        comments=comments,
+        results=results
+    )
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -217,6 +272,18 @@ def register():
         logged_in = session.get('logged_in', False),
         username = session.get('username', '')
         )
+
+@app.route('/account')
+def account():
+    user = request.args.get('user', '')
+
+    return render_template(
+        'account.html',
+        title=user,
+        logged_in = session.get('logged_in', False),
+        username = session.get('username'),
+        account = user
+    )
 
 # Database stuff
 @app.teardown_appcontext

@@ -71,3 +71,39 @@ def getDriver(app, driverId):
 
     output = requests.get(base_url + api_key + request + driverId).json()
     return output
+
+def getSeasonSchedule(app, leagueId, seasonYear):
+    app.logger.info(f"Retreiving season schedule for {leagueId} and season {seasonYear}")
+    output = []
+
+    base_url = "https://www.thesportsdb.com/api/v1/json/"
+    request = "/eventsseason.php?id="
+    api_key = app.config['thesportsdb_apikey']
+
+    output = requests.get(base_url + api_key + request + leagueId + "&s=" + str(seasonYear)).json()
+
+    return sorted(output["events"], key=lambda x:x["strTimestamp"]) 
+
+def getEvent(app, eventId):
+    app.logger.info(f"Retreiving event details {eventId}")
+    output = []
+
+    base_url = "https://www.thesportsdb.com/api/v1/json/"
+    request = "/lookupevent.php?id="
+    api_key = app.config['thesportsdb_apikey']
+
+    output = requests.get(base_url + api_key + request + eventId).json()
+
+    return output["events"][0]
+
+def getEventResults(app, eventId):
+    app.logger.info(f"Retreiving event results {eventId}")
+    output = []
+
+    base_url = "https://www.thesportsdb.com/api/v1/json/"
+    request = "/eventresults.php?id="
+    api_key = app.config['thesportsdb_apikey']
+
+    output = requests.get(base_url + api_key + request + eventId).json()
+
+    return output["results"]

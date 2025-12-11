@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ url_for('static', filename='comments.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='event.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="event-info-container">
+    <h1>{{ event.strEvent }}</h1>
+    <script>
+        // Set the date we're counting down to
+        var countDownDate = new Date("{{ event.strTimestamp }}").getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the element with id="demo"
+        document.getElementById("timestamp").innerHTML = days + "d " + hours + "h "
+        + minutes + "m " + seconds + "s ";
+
+        // If the count down is finished, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("timestamp").innerHTML = "This event has already taken place.";
+        }
+        }, 1000);
+    </script>
+    <p id="timestamp">{{ event.strTimestamp }}</p>
+    <div class="event-location">
+    <p class="country">{{ event.strCountry }}, {{ event.strCity }}</p>
+    <p class="venue">{{ event.strVenue }}</p>
+    </div>
+</div>
+
+<h1>Results</h1>
+<hr>
+<div class="results-container">
+{% if results %}
+        {% for result in results %}
+        <div class="result-item">
+            <p class="pos">{{ result.intPosition }}</p>
+            <p class="driver">{{ result.strPlayer }}</p>
+            <p class="time">{{ result.strDetail }}</p>
+        </div>
+        {% endfor %}
+{% else %}
+    <div class="result-item">
+    <p class="error">Unfortunately, the results for this event are not available.</p>
+    </div> 
+{% endif %}
+</div>
+<div class="comments-container">
+    <hr>
+    <h2>Comments - {{ total_comments }}</h2>
+    {% for comment in comments %}
+    <div class="comment">
+        <h3>{{ comment[2] }}</h3>
+        <p>{{ comment[3] }}</p>
+        <p>{{ comment[0] }}</p>
+    </div>
+    {% endfor %}
+
+    <div class="comment-submission">
+        <form method="post">
+            <h2><label for="comment-box">Leave a comment:</label></h2>
+            <textarea id="comment-box" placeholder="Leave your comment here" name="comment-box" rows="5" cols="100"></textarea>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
+{% endblock %}

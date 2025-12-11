@@ -1,0 +1,58 @@
+.results-container{
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: dodgerblue;
+    border-radius: 30px;
+    padding: 1%;
+    margin: 2% 0 2% 0;
+}
+
+.result-item {
+    padding: 1%;
+    margin: 1%;
+    background-color: #202020;
+    border-radius: 2.5em;
+    display: flex;
+    align-items: center;
+}
+
+.result-item p {
+    font-family: 'Nexa-Light';
+    color: white;
+    font-size: 2rem;
+    text-decoration: none;
+}
+
+.event-info-container p {
+    font-family: 'Nexa-Light';
+    color: black;
+    font-size: 2rem;
+    text-decoration: none;
+}
+
+.event-location {
+    display: flex;
+    align-items: center;
+}
+
+.event-location .venue {
+    margin-left: auto;
+}
+
+.time {
+    margin-left: auto;
+    margin-right: 5%;
+}
+
+.driver {
+    margin-left: 5%
+}
+
+.pos {
+    margin-left: 2.5%;
+}
+
+.error {
+    margin-left: auto;
+    margin-right: auto;
+}

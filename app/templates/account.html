@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block stylesheet %}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ account }}</h1>
+    <hr>
+    {% if account == username %}
+    <h3>This is you!</h3>
+    {% else %}
+    <h3>This is not you.</h3>
+    {% endif %}
+{% endblock %}

@@ -9,3 +9,35 @@
 .league-next-event {
     padding-top: 2%;
 }
+
+.schedule-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: dodgerblue;
+    border-radius: 30px;
+    padding: 1%;
+    margin: 2% 0 2% 0;
+}
+
+.scheduled-event {
+    padding: 1%;
+    margin: 1%;
+    background-color: #202020;
+    border-radius: 2.5em;
+}
+
+.scheduled-event img {
+    width: 100%;
+    border-radius: 2em;
+}
+
+.scheduled-event p {
+    font-family: 'Nexa-Light';
+    color: white;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.scheduled-event:hover {
+    background-color: lightslategray;
+}

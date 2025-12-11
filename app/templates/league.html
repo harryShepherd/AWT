@@ -56,6 +56,16 @@
     {% endif %}
 </div>
 
+<div class="schedule-container">
+    {% for event in schedule %}
+    <a href="event?e={{ event.idEvent }}">
+        <div class="scheduled-event">
+            <img src='{{ event.strThumb }}'/>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
 <h1>{{ league.strLeague }} Competitors</h1>
 <hr>
 
